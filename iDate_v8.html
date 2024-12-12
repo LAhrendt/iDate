@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>iDate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<style>
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+p, button {
+    font-size: 500%;
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+    // Sæt start-datoen til den nuværende.
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+    
+    const monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
+    let monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    setDate();  // Få vist datoen på siden når den er indlæst.
+    
+
+    function setDate(){
+        // Funktionen konstruerer en tekststreng med datoen og viser den i elementet med id'et date.
+        let date = day + ". " + monthNames[month] + " " + year;
+        $('#date').text(date);
+    }
+
+    $("#forward").click(function(){
+        // Når der trykkes på knappen med id'et forward, skal dagen øges.
+        if (day == monthLengths[month]) {
+            if (month == 11) {
+                // Måned 11 = december
+                year = year + 1;
+                month = 0;
+            } else {
+                month = month + 1;
+            }
+            day = 1;
+        } else {
+            day = day + 1;
+        }
+        setDate();
+    })
+
+    $("#back").click(function(){
+        // Når der trykkes på knappen med id'et back, skal dagen formindskes.
+        if (day == 1) {
+            if (month == 0) {
+                // Måned 0 = januar
+                year = year - 1;
+                month = 11;
+            } else {
+                month = month - 1;
+            }
+            day = monthLengths[month];
+        } else {
+            day = day - 1;
+        }
+        setDate();
+    })
+})
+</script>
+
+
+</head>
+<body>
+<div class="center">
+    <button id="forward">+</button>
+    <p class="w3-jumbo w3-center" id="date"></p>
+    <button id="back">-</button>
+</div>
+</body>
+</html> 
